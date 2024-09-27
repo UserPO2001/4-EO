@@ -6,6 +6,7 @@ class Gebruiker {
     private $firstname;
     private $lastname;
 
+    // Constructor to initialize PDO and optionally fetch user details
     public function __construct($pdo, $id = null) {
         $this->pdo = $pdo;
         if ($id) {
@@ -14,6 +15,7 @@ class Gebruiker {
         }
     }
 
+    // Fetch user details from the database
     private function fetchUserDetails() {
         try {
             $sql = "SELECT username, firstname, lastname FROM users WHERE id = ?";
@@ -33,17 +35,21 @@ class Gebruiker {
         }
     }
 
+    // Static method to register a new user
     public static function register($pdo, $username, $password, $firstname, $lastname) {
         try {
+            // Insert new user into the database
             $sql = "INSERT INTO users (username, password, firstname, lastname) VALUES (?, ?, ?, ?)";
             $stmt = $pdo->prepare($sql);
-            $passwordHash = password_hash($password, PASSWORD_DEFAULT);
+            $passwordHash = password_hash($password, PASSWORD_DEFAULT); // Hash the password
             $stmt->execute([$username, $passwordHash, $firstname, $lastname]);
+            echo "User registered successfully.";
         } catch (\PDOException $e) {
             die("Error registering user: " . $e->getMessage());
         }
     }
 
+    // Method to get user details
     public function getUserDetails() {
         return [
             'username' => $this->username,
@@ -52,6 +58,7 @@ class Gebruiker {
         ];
     }
 
+    // Method to get user orders
     public function getOrders() {
         $orders = [];
         try {
@@ -68,4 +75,3 @@ class Gebruiker {
         return $orders;
     }
 }
-?>

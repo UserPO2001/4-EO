@@ -17,7 +17,7 @@ $bestelling = new Bestelling($pdo);
 
 // Fetch products from the database
 try {
-    $sql = "SELECT id, name AS product_name, price FROM products";
+    $sql = "SELECT id, name AS product_name, price, stock FROM products"; // Include stock in the query
     $stmt = $pdo->prepare($sql);
     $stmt->execute();
     $products = $stmt->fetchAll(PDO::FETCH_ASSOC);

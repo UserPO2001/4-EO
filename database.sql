@@ -11,12 +11,13 @@ CREATE TABLE IF NOT EXISTS users (
     lastname VARCHAR(50) NOT NULL
 );
 
--- Create the Products table
+-- Create the Products table with stock column
 CREATE TABLE IF NOT EXISTS products (
     id INT PRIMARY KEY AUTO_INCREMENT,
     name VARCHAR(100) UNIQUE NOT NULL,
     description TEXT,
-    price DECIMAL(10, 2) NOT NULL
+    price DECIMAL(10, 2) NOT NULL,
+    stock INT NOT NULL DEFAULT 0  -- Added stock column
 );
 
 -- Create the Orders table
